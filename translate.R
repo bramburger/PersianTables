@@ -41,34 +41,50 @@ saneTranslation <- function (x) {
             "9" = "٩")
 }
 
+englishTable <- function(data, filename) {
+    meanBoys <- round(mean(data$Boys), 3)
+    meanGirls <- round(mean(data$Girls), 3)
+    standardBoys <- round(sd(data$Boys), 3)
+    standardGirls <- round(sd(data$Girls), 3)
+
+    cat("## English\n\n", file=filename, append=TRUE)
+    cat("|   | Boys | Girls |\n", file=filename, append=TRUE)
+    cat("| :--- | :--- | :--- |\n", file=filename, append=TRUE)
+    cat("| mean (sd) |", meanBoys, " (", standardBoys, ") |",
+        meanGirls, " (", standardGirls, ") |\n\n",
+        file=filename, append=TRUE)
+}
+
+persianTable <- function(data, filename) {
+    meanPersianBoys <- toPersian(round(mean(data$Boys), 3))
+    meanPersianGirls <- toPersian(round(mean(data$Girls), 3))
+    standardPersianBoys <- toPersian(round(sd(data$Boys), 3))
+    standardPersianGirls <- toPersian(round(sd(data$Girls), 3))
+    
+    cat("## فارسی\n\n", file=filename, append=TRUE)
+    cat("| ", file=filename, append=TRUE)
+    cat("دختران", file=filename, append=TRUE)
+    cat(" | ", file=filename, append=TRUE)
+    cat("پسران", file=filename, append=TRUE)
+    cat(" |    |\n ", file=filename, append=TRUE)
+    cat("| ---: | ---: | ---: |\n", file=filename, append=TRUE)
+    cat("| ", meanPersianGirls, " (", standardPersianGirls, ") | ",
+        meanPersianBoys, " (", standardPersianBoys, ") | ",
+        file=filename, append=TRUE)
+    cat("میانگین (انحراف معیار) |\n\n", file=filename, append=TRUE)
+}
+
 n <- 20
 theData <- data.frame(Boys = rnorm(n, 1, 5),
                       Girls = rnorm(n, 2, 3))
-meanBoys <- round(mean(theData$Boys), 3)
-meanGirls <- round(mean(theData$Girls), 3)
-standardBoys <- round(sd(theData$Boys), 3)
-standardGirls <- round(sd(theData$Girls), 3)
 
-cat("# Translate tables\n\n", file="README.md")
+filename <- "README.md"
+cat("# Translate tables\n\n", file=filename)
+englishTable(theData, filename)
+persianTable(theData, filename)
 
-cat("## English\n\n", file="README.md", append=TRUE)
-cat("|   | Boys | Girls |\n", file="README.md", append=TRUE)
-cat("| :--- | :--- | :--- |\n", file="README.md", append=TRUE)
-cat("| mean (sd) |", meanBoys, " (", standardBoys, ") |", meanGirls, " (", standardGirls, ") |\n\n", file="README.md", append=TRUE)
-
-meanPersianBoys <- toPersian(meanBoys)
-meanPersianGirls <- toPersian(meanGirls)
-standardPersianBoys <- toPersian(standardBoys)
-standardPersianGirls <- toPersian(standardGirls)
-cat("## فارسی\n\n", file="README.md", append=TRUE)
-cat("| ", file="README.md", append=TRUE)
-cat("دختران", file="README.md", append=TRUE)
-cat(" | ", file="README.md", append=TRUE)
-cat("پسران", file="README.md", append=TRUE)
-cat(" |    |\n ", file="README.md", append=TRUE)
-cat("| ---: | ---: | ---: |\n", file="README.md", append=TRUE)
-cat("| ", meanPersianGirls, " (", standardPersianGirls, ") | ",
-    meanPersianBoys, " (", standardPersianBoys, ") | ",
-    file="README.md", append=TRUE)
-cat("میانگین (انحراف معیار) |\n", file="README.md", append=TRUE)
-
+n <- 12345
+theData <- data.frame(Boys = rnorm(n, 1, 5),
+                      Girls = rnorm(n, 2, 3))
+englishTable(theData, filename)
+persianTable(theData, filename)
